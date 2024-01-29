@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" id="form">
+        <button type="submit" onclick="addName()">Thêm cầu thủ</button>
+        <input type="text" id="input">
+    </form>
+    <p>Danh sách cầu thủ:</p>
+    <p id="text"></p>
+    <script>
+        document.getElementById("form").addEventListener('submit',(e)=>{
+            e.preventDefault();
+        })
+        let listPlayer=JSON.parse(localStorage.getItem("player"))||[];
+        console.log(listPlayer)
+        display();
+        function addName(){
+            let addValue=input.value.trim();
+            listPlayer.push(addValue);
+            localStorage.setItem("player",JSON.stringify(listPlayer));
+            input.value="";
+            display();
+        }
+        function display(){
+            document.getElementById("text").innerHTML="";
+            for(let btn of listPlayer){
+                let pElement=document.createElement("p");
+                pElement.innerHTML=btn;
+                document.getElementById("text").appendChild(pElement);
+            }
+        }
+    </script>
+</body>
+</html>

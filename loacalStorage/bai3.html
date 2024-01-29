@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" id="form">
+        <input type="text" placeholder="Nhập id cầu thủ" id="inputID">
+        <button type="submit" onclick="deleteP()">Xóa cầu thủ</button>
+    </form>
+    <p>Danh sách cầu thủ:</p>
+    <p id="list"></p>
+    <script>
+        document.getElementById("form").addEventListener('submit',(e)=>{
+            e.preventDefault();
+        });
+        let listPlayer=JSON.parse(localStorage.getItem("player"))||[];
+        display();
+        function display(){
+            list.innerHTML="";
+            for(let btn of listPlayer){
+            let pElement=`<p>${btn}</p>`;
+            document.getElementById("list").innerHTML+=pElement;
+        }
+    }  
+       function deleteP(){
+           let delValue=inputID.value.trim();
+           console.log(delValue)
+           inputID.value="";
+           listPlayer=listPlayer.filter((btn)=>{
+            return btn!==delValue;
+           })
+           localStorage.setItem("player",JSON.stringify(listPlayer));
+           display();
+       }
+    </script>
+</body>
+</html>

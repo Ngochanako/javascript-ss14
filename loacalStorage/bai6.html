@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" id="form">
+        <h3>Đăng nhập tài khoản</h3>
+        <label for="nameInput">Tên tài khoản</label>
+        <input type="text" name="" id="nameInput">
+        <br> <br>
+        <label for="passInput">Mật khẩu</label>
+        <input type="password" id="passInput">
+        <br> <br>
+        <button type="submit" onclick="logIn()">Đăng nhập</button>
+    </form>
+    <script>
+        document.getElementById("form").addEventListener('submit',(e)=>{
+            e.preventDefault();
+        })
+        function logIn(){
+            let listUser=JSON.parse(localStorage.getItem("users"));
+            console.log(listUser)            
+            let nameInput=document.getElementById("nameInput").value.trim();
+            let passInput=document.getElementById("passInput").value.trim();
+            for(let btn of listUser){
+                if(btn.name==nameInput && btn.password==passInput){
+                    document.getElementById("nameInput").value="";
+                    document.getElementById("passInput").value="";
+                   return  sessionStorage.setItem("listUser",JSON.stringify(btn));
+                }
+            }
+            alert("Thông tin đăng nhập không chính xác");
+        }
+    </script>
+</body>
+</html>

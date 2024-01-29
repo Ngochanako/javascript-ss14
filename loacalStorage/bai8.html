@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .container{
+        display: flex;
+        flex-direction: column;
+        background-color:#F44336 ;
+        color: white;
+        font-weight: 600;
+        font-size: 20px;
+       align-items: center;
+        padding: 20px;
+    }
+    .form{
+        display: flex;
+    }
+    input{
+        padding: 5px;
+        width: 400px;
+    }
+    .add{
+        padding: 5px;
+    }
+    .item{
+        display: flex;
+        justify-content: center;
+        gap: 200px;
+    }
+    .material-symbols-outlined{
+        background-color: white;
+        border-color: transparent;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <p class="text">My To Do List</p>
+        <div class="form">
+            <input type="text" placeholder="Title" id="input">
+            <button onclick="addItem()" class="add">Add</button>
+        </div>
+    </div>
+    <ul class="list_item" id="list_item">
+        <!-- <li class="item">
+            <span class="material-symbols-outlined" >
+                close
+            </span>
+        </li> -->
+    </ul>
+    <script>
+        let todoListDB=JSON.parse(localStorage.getItem("todoList"))||[];
+        function displayItem(){
+            document.getElementById("list_item").innerHTML="";
+            for(let btn of todoListDB){
+                let liElement=`<li class="item">
+                    ${btn.name}
+            <button class="material-symbols-outlined" onclick="deleteItem(${btn.id})">
+                close
+            <button/>
+            </li>`
+            document.getElementById("list_item").innerHTML+=liElement;
+            }
+        }
+        displayItem();
+        function addItem(){
+            let addValue=document.getElementById("input").value.trim();
+            let btn={
+                name: addValue,
+                id: Math.ceil(Math.random()*10000000),
+            }
+            todoListDB.push(btn);
+            console.log(todoListDB)
+            document.getElementById("input").value="";
+            localStorage.setItem("todoList",JSON.stringify(todoListDB));
+            displayItem();
+        }
+        function deleteItem(id){
+            todoListDB=todoListDB.filter((item)=>{
+                return item.id!==id;
+            })
+            displayItem();
+            localStorage.setItem("todoList",JSON.stringify(todoListDB));
+        }
+    </script>
+</body>
+</html>

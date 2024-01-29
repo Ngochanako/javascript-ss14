@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" id="form">
+        <h3>Đăng ký tài khoản</h3>
+        <label for="nameInput">Tên tài khoản</label>
+        <input type="text" name="" id="nameInput">
+        <br> <br>
+        <label for="passInput">Mật khẩu</label>
+        <input type="password" id="passInput">
+        <br> <br>
+        <button type="submit" onclick="signIn()">Đăng ký</button>
+    </form>
+    <script>
+        form.addEventListener('submit',(e)=>{
+            e.preventDefault();
+        })
+        let listUser=JSON.parse(localStorage.getItem("users"))||[];
+        function signIn(){
+            nameInput=document.getElementById("nameInput").value.trim();
+            console.log(nameInput);
+            document.getElementById("nameInput").value="";
+            passInput=document.getElementById("passInput").value.trim();
+            console.log(passInput);
+            document.getElementById("passInput").value="";
+            let btn=
+            {
+               name: nameInput,
+               password: passInput,
+            }
+            listUser.push(btn);
+            localStorage.setItem("users",JSON.stringify(listUser));
+        }
+    </script>
+</body>
+</html>

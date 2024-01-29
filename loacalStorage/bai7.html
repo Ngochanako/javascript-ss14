@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" id="form">
+        <input type="text" name="" id="input" placeholder="Nhập tên người dùng">
+        <button type="submit" id="add">Thêm</button>
+        <button type="submit" id="delete">Xóa</button>
+        <br>
+        <p>Tên người dùng:</p>
+        <p id="nameUser"></p>
+    </form>
+    <script>
+        document.getElementById("form").addEventListener('submit',(e)=>{
+            e.preventDefault();
+        })
+        let listUser=JSON.parse(localStorage.getItem("listUser"))||[];
+        console.log(listUser)
+        function checkAdd() {
+                if (listUser.length) {
+                    document.getElementById("add").style.display = "none";
+                }else{
+                    document.getElementById("add").style.display = "";
+                }
+            }
+        checkAdd();
+        display();
+        function display(){
+            document.getElementById("nameUser").innerHTML="";
+            for(let x of listUser){
+            let pElement=`<p>${x}</p>`;
+            document.getElementById("nameUser").innerHTML+=pElement;
+            }
+        }
+        document.getElementById("add").addEventListener('click',function(){
+            let addValue=document.getElementById("input").value.trim();
+            console.log(addValue);
+            document.getElementById("input").value="";
+            listUser.push(addValue);
+            checkAdd();
+            localStorage.setItem("listUser",JSON.stringify(listUser));
+            display();
+        })
+        document.getElementById("delete").addEventListener('click',function(){
+            listUser=[];
+            checkAdd();
+            localStorage.setItem("listUser",JSON.stringify(listUser));
+            display();
+        })
+    </script>
+</body>
+</html>
